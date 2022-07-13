@@ -20,7 +20,8 @@
 
 
 // cob_gazebo_ros_control
-#include <gazebo_ros_control/default_robot_hw_sim.h>
+#include <gazebo_ros2_control/default_robot_hw_sim.h>
+#include "rclcpp/rclcpp.hpp"
 
 
 namespace cob_gazebo_ros_control
@@ -32,7 +33,7 @@ public:
 
   virtual bool initSim(
     const std::string& robot_namespace,
-    ros::NodeHandle model_nh,
+    auto model_nh = rclcpp::Node::make_shared(robot_namespace),
     gazebo::physics::ModelPtr parent_model,
     const urdf::Model *const urdf_model,
     std::vector<transmission_interface::TransmissionInfo> transmissions);

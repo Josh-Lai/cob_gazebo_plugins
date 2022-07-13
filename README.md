@@ -1,4 +1,7 @@
 cob_gazebo_plugins
+## ROS2 INTEGRATION
+# JOSH TODO
+Figure out the differences between ros_control and ros2_control
 ===========
 
 ## ROS Distro Support

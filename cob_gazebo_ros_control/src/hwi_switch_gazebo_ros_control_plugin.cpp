@@ -39,7 +39,7 @@ void HWISwitchGazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf
   }
 
   // Check that ROS has been initialized
-  if(!ros::isInitialized())
+  if(!rclcpp::is_initalized())
   {
     ROS_FATAL_STREAM_NAMED("cob_gazebo_ros_control","A ROS node for Gazebo has not been initialized, unable to load plugin. "
       << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
@@ -85,12 +85,12 @@ void HWISwitchGazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf
 #else
   gazebo::physics::PhysicsEnginePtr physics = gazebo::physics::get_world()->GetPhysicsEngine();
 #endif
-  ros::Duration gazebo_period(physics->GetMaxStepSize());
+  rclcpp::Duration gazebo_period(physics->GetMaxStepSize());
 
   // Decide the plugin control period
   if(sdf_->HasElement("controlPeriod"))
   {
-    control_period_ = ros::Duration(sdf_->Get<double>("controlPeriod"));
+    control_period_ = rclcpp::Duration(sdf_->Get<double>("controlPeriod"));
 
     // Check the period against the simulation period
     if( control_period_ < gazebo_period )
@@ -112,7 +112,8 @@ void HWISwitchGazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf
   }
 
   // Get parameters/settings for controllers from ROS param server
-  model_nh_ = ros::NodeHandle(robot_namespace_);
+  // model_nh_ = ros::NodeHandle(robot_namespace_);
+  model_nh_ = rclcpp::Node::make_shared(robot_namespace_);
 
   // Initialize the emergency stop code.
   e_stop_active_ = false;
@@ -216,8 +217,8 @@ void HWISwitchGazeboRosControlPlugin::Update()
 #else
   gazebo::common::Time gz_time_now = parent_model_->GetWorld()->GetSimTime();
 #endif
-  ros::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec);
-  ros::Duration sim_period = sim_time_ros - last_update_sim_time_ros_;
+  rclcpp::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec);
+  rclcpp::Duration sim_period = sim_time_ros - last_update_sim_time_ros_;
 
   hwi_switch_robot_hw_sim_->eStopActive(e_stop_active_);
   hwi_switch_robot_hw_sim_->stateValid(state_valid_);

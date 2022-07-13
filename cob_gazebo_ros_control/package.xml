@@ -15,20 +15,23 @@
   <url type="bugtracker">https://github.com/ipa320/cob_gazebo_plugins/issues</url>
   <url type="repository">https://github.com/ipa320/cob_gazebo_plugins</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <exec_depend>rosidl_default_generators</exec_depend>
+  <!-- <buildtool_depend>ament_cmake</buildtool_depend/> -->
 
   <depend>controller_manager</depend>
   <depend>gazebo</depend>
   <depend>gazebo_ros</depend>
-  <depend>gazebo_ros_control</depend>
+  <depend>gazebo_ros2_control</depend>
   <depend>hardware_interface</depend>
-  <depend>joint_limits_interface</depend>
+  <!-- <depend>joint_limits_interface</depend> -->
   <depend>pluginlib</depend>
-  <depend>roscpp</depend>
-  <depend>transmission_interface</depend>
+  <depend>rclcpp</depend>
+  <!-- <depend>transmission_interface</depend> -->
   <depend>urdf</depend>
 
   <export>
+    <build_type>ament_cmake</build_type>
     <gazebo_ros_control plugin="${prefix}/cob_gazebo_ros_control_plugins.xml"/>
   </export>
 </package>

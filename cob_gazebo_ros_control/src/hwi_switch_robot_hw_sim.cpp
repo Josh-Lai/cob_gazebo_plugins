@@ -24,14 +24,14 @@ namespace cob_gazebo_ros_control
 
 bool HWISwitchRobotHWSim::initSim(
   const std::string& robot_namespace,
-  ros::NodeHandle model_nh,
+  auto model_nh = rclcpp::Node::make_shared(robot_namespace),
   gazebo::physics::ModelPtr parent_model,
   const urdf::Model *const urdf_model,
   std::vector<transmission_interface::TransmissionInfo> transmissions)
 {
   // getJointLimits() searches joint_limit_nh for joint limit parameters. The format of each
   // parameter's name is "joint_limits/<joint name>". An example is "joint_limits/axle_joint".
-  const ros::NodeHandle joint_limit_nh(model_nh, robot_namespace);
+  const rclcpp::Node joint_limit_nh(model_nh, robot_namespace); //Unsure of this migration //Unsure of this migratioo
 
   // Resize vectors to our DOF
   if(enable_joint_filtering_)
@@ -280,7 +280,7 @@ bool HWISwitchRobotHWSim::initSim(
   return true;
 }
 
-bool HWISwitchRobotHWSim::enableJointFiltering(ros::NodeHandle nh, std::string filter_joints_param)
+bool HWISwitchRobotHWSim::enableJointFiltering(auto nh, std::string filter_joints_param)
 {
   enabled_joints_.clear();
   enable_joint_filtering_ = false;

@@ -16,8 +16,9 @@
 
 
 // CobGazeboRosControlPlugin
-#include <gazebo_ros_control/gazebo_ros_control_plugin.h>
+#include <gazebo_ros2_control/gazebo_ros2_control_plugin.h>
 #include <cob_gazebo_ros_control/hwi_switch_robot_hw_sim.h>
+#include "rclcpp/rclcpp.hpp"
 
 
 namespace cob_gazebo_ros_control
@@ -43,7 +44,7 @@ protected:
   boost::shared_ptr<cob_gazebo_ros_control::HWISwitchRobotHWSim> hwi_switch_robot_hw_sim_;
 
   bool state_valid_;
-  ros::Subscriber state_valid_sub_;
+  rclcpp::Subscriber state_valid_sub_;
 };
 
 
